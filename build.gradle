@@ -34,6 +34,23 @@ dependencies {
     // JDBC Type 4 driver for MySQL(8.0.33)
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
+    // GSON : Benchmark 2021 181MB/86kb Test 속도 1위 (Jackson, JSON.simple, JSONP)
+    // 버전 선택 사유 : 취약점이 존재하지 않고 가장 많은 다운로드를 기록함
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+    // Servlet : 자바 기반의 웹 애플리케이션 프로그래밍 기술
+    // 버전 선택 사유 : tomcat 9.0의 표준 / 취약점이 존재하지 않고 가장 많은 다운로드를 기록함 + 이후 버전부터는 jakarta 사용
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    // Log4j2 : Java Logging Framework / Logback 및 Log4j 문제 방지 및 개선 목적
+    // 버전 선택 사유 : 알려진 취약점이 존재하지 않고 가장 많은 다운로드를 기록함(최소 Java8 지원)
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.20.0'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.20.0'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl
+    testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: '2.20.0'
+
 
 
 }

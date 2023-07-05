@@ -1,4 +1,8 @@
 # properties > yml : 불필요한 반복 코드 삭제 / 가독성 확보(계층 구조)
 server:
   port: 8001
-
+#spring:
+#  datasource:
+    # MySQL connector 8.x : 패키지 경로 변경(com.mysql>cj>Driver.class) : com.mysql.cj.jdbc.Driver 사용
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306
