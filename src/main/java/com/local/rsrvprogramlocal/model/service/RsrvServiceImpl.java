@@ -2,8 +2,8 @@ package com.local.rsrvprogramlocal.model.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
-import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
+import com.local.rsrvprogramlocal.model.dto.RsrvRequestDTO;
+import com.local.rsrvprogramlocal.model.dto.RsrvResponseDTO;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateDeserializer;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateSerializer;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateTimeDeserializer;
@@ -109,12 +109,12 @@ public class RsrvServiceImpl implements RsrvService {
 
         if (jsonContent.contains("ds_rsrvInfo")||jsonContent.contains("ds_cnclInfo")||jsonContent.contains("ds_search")) {
             // 요청
-            RsrvRequest rsrvRequest = gson.fromJson(jsonContent, RsrvRequest.class);
-            return rsrvRequest;
+            RsrvRequestDTO rsrvRequestDTO = gson.fromJson(jsonContent, RsrvRequestDTO.class);
+            return rsrvRequestDTO;
         } else if (jsonContent.contains("ds_prcsResult")||jsonContent.contains("ds_result")) {
             // 응답
-            RsrvResponse rsrvResponse = gson.fromJson(jsonContent, RsrvResponse.class);
-            return rsrvResponse;
+            RsrvResponseDTO rsrvResponseDTO = gson.fromJson(jsonContent, RsrvResponseDTO.class);
+            return rsrvResponseDTO;
         } else {
             // 예외 처리 패턴 getOrElse : 예외 대신 기본 값을 리턴함(null이 아닌 기본 값)
             return Collections.emptyList();
@@ -122,13 +122,13 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public String parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
+    public String parsingJson(RsrvRequestDTO rsrvRequestDTO) { // 요청 JSON 전문 생성
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         Gson gson = gsonBuilder.serializeNulls().setPrettyPrinting().create();
 
-        String jsonContent = gson.toJson(rsrvRequest);
+        String jsonContent = gson.toJson(rsrvRequestDTO);
         return jsonContent;
     }
 }

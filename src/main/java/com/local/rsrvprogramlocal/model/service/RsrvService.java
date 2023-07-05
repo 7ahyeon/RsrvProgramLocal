@@ -1,6 +1,6 @@
 package com.local.rsrvprogramlocal.model.service;
 
-import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
+import com.local.rsrvprogramlocal.model.dto.RsrvRequestDTO;
 
 public interface RsrvService {
     // 예약 서비스 선택에 따른 파일 이름 설정
@@ -12,5 +12,5 @@ public interface RsrvService {
     // JSON 전문 Object 바인딩
     Object bindingObject(String jsonContent);
     // 요청 JSON 전문 생성
-    String parsingJson(RsrvRequest rsrvRequest);
+    String parsingJson(RsrvRequestDTO rsrvRequestDTO);
 }
