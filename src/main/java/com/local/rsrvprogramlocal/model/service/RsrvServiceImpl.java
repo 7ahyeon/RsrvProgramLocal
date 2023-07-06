@@ -2,8 +2,8 @@ package com.local.rsrvprogramlocal.model.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.local.rsrvprogramlocal.model.dto.RsrvRequestDTO;
-import com.local.rsrvprogramlocal.model.dto.RsrvResponseDTO;
+import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
+import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateDeserializer;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateSerializer;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateTimeDeserializer;
@@ -97,7 +97,7 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public Object bindingObject(String jsonContent) { // JSON 전문 Object 바인딩
+    public Object bindingObject(String jsonFileContent) { // JSON 전문 Object 바인딩
         //.serializeNulls() .setPrettyPrinting() : toJson (직렬화 시 사용)
         // .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES) : Underscore를 CamelCase로 자동 변환 / 작동 불가 이슈
         // Object @SerializedName 설정 부여
@@ -107,14 +107,14 @@ public class RsrvServiceImpl implements RsrvService {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
         Gson gson = gsonBuilder.setPrettyPrinting().create();
 
-        if (jsonContent.contains("ds_rsrvInfo")||jsonContent.contains("ds_cnclInfo")||jsonContent.contains("ds_search")) {
+        if (jsonFileContent.contains("ds_rsrvInfo")||jsonFileContent.contains("ds_cnclInfo")||jsonFileContent.contains("ds_search")) {
             // 요청
-            RsrvRequestDTO rsrvRequestDTO = gson.fromJson(jsonContent, RsrvRequestDTO.class);
-            return rsrvRequestDTO;
-        } else if (jsonContent.contains("ds_prcsResult")||jsonContent.contains("ds_result")) {
+            RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
+            return rsrvRequest;
+        } else if (jsonFileContent.contains("ds_prcsResult")||jsonFileContent.contains("ds_result")) {
             // 응답
-            RsrvResponseDTO rsrvResponseDTO = gson.fromJson(jsonContent, RsrvResponseDTO.class);
-            return rsrvResponseDTO;
+            RsrvResponse rsrvResponse = gson.fromJson(jsonFileContent, RsrvResponse.class);
+            return rsrvResponse;
         } else {
             // 예외 처리 패턴 getOrElse : 예외 대신 기본 값을 리턴함(null이 아닌 기본 값)
             return Collections.emptyList();
@@ -122,13 +122,13 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public String parsingJson(RsrvRequestDTO rsrvRequestDTO) { // 요청 JSON 전문 생성
+    public String parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         Gson gson = gsonBuilder.serializeNulls().setPrettyPrinting().create();
 
-        String jsonContent = gson.toJson(rsrvRequestDTO);
+        String jsonContent = gson.toJson(rsrvRequest);
         return jsonContent;
     }
 }
