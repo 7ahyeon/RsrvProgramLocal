@@ -12,12 +12,8 @@ public class ConnectionServiceImpl implements ConnectionService {
 
     @Override
     public String createRequest(int select) {
-
         // 요청 파일 읽기
-        String jsonFileName = rsrvService.selectService(select);
-        String jsonFilePath = rsrvService.getFilePath(jsonFileName);
-        String jsonFileContent = rsrvService.readFile(jsonFilePath);
-
+        String jsonFileContent = rsrvService.getRequestFile(select);
         // 요청 Json 전문 Object 바인딩
         RsrvRequest rsrvRequest = (RsrvRequest) rsrvService.bindingObject(jsonFileContent);
         // 요청 Json 전문 생성
