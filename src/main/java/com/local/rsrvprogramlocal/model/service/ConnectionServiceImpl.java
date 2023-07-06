@@ -1,6 +1,7 @@
 package com.local.rsrvprogramlocal.model.service;
 
 import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
+import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
 
 public class ConnectionServiceImpl implements ConnectionService {
     private final RsrvService rsrvService;
@@ -23,5 +24,12 @@ public class ConnectionServiceImpl implements ConnectionService {
         String requestJson = rsrvService.parsingJson(rsrvRequest);
 
         return requestJson;
+    }
+
+    @Override
+    public String handleResponse(String responseJsonContent) {
+        // 응답 Json 전문 Object 바인딩
+        RsrvResponse rsrvResponse = (RsrvResponse) rsrvService.bindingObject(responseJsonContent);
+        return rsrvResponse.toString();
     }
 }

@@ -23,8 +23,6 @@ public class RestTemplateController {
 
     @GetMapping("/rsrvRequest")
     public String rsrvRequest(@RequestParam int select) {
-
-        System.out.println(select);
         // Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-type", "application/json");
@@ -49,6 +47,8 @@ public class RestTemplateController {
         HttpHeaders responseHeaders = response.getHeaders();
         String responseBody = response.getBody();
         System.out.println(responseBody.toString());
+        String responseTostring = connectionService.handleResponse(responseBody);
+        System.out.println(responseTostring);
         return null;
     }
 }

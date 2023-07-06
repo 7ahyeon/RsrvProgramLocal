@@ -14,5 +14,5 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class RsrvResponse { // 한화 리조트에서의 예약 응답
     @SerializedName("ds_prcsResult") // 예약 신청 JSON Key
-    private ArrayList<RsrvResponseInfo> rsrvResponseInfoList1;
+    private ArrayList<RsrvResponseInfo> rsrvResponseInfoList;
 }

@@ -1,0 +1,27 @@
+{
+    "ds_rsrvInfo": [
+        {
+            "CUST_NO": "0000000002",
+            "MEMB_NO": "",
+            "CUST_IDNT_NO": "195176",
+            "CONT_NO": "",
+            "PAKG_NO": "",
+            "CPON_NO": "",
+            "LOC_CD": "0201",
+            "ROOM_TYPE_CD": "FAM",
+            "RSRV_LOC_DIV_CD": "S",
+            "ARRV_DATE": "20230528",
+            "RSRV_ROOM_CNT": "1",
+            "OVNT_CNT": "1",
+            "INHS_CUST_NM": "김지윤",
+            "INHS_CUST_TEL_NO2": "010",
+            "INHS_CUST_TEL_NO3": "0000",
+            "INHS_CUST_TEL_NO4": "0000",
+            "RSRV_CUST_NM": "김지윤",
+            "RSRV_CUST_TEL_NO2": "010",
+            "RSRV_CUST_TEL_NO3": "0000",
+            "RSRV_CUST_TEL_NO4": "0000",
+            "REFRESH_YN": "Y"
+        }
+    ]
+}

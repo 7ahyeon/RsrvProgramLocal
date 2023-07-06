@@ -107,11 +107,11 @@ public class RsrvServiceImpl implements RsrvService {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
         Gson gson = gsonBuilder.setPrettyPrinting().create();
 
-        if (jsonFileContent.contains("ds_rsrvInfo")||jsonFileContent.contains("ds_cnclInfo")||jsonFileContent.contains("ds_search")) {
+        if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
             RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
             return rsrvRequest;
-        } else if (jsonFileContent.contains("ds_prcsResult")||jsonFileContent.contains("ds_result")) {
+        } else if (jsonFileContent.contains("ds_prcsResult")) {
             // 응답
             RsrvResponse rsrvResponse = gson.fromJson(jsonFileContent, RsrvResponse.class);
             return rsrvResponse;
