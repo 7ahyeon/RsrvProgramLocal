@@ -79,10 +79,4 @@ public class RsrvRequestInfo { // 한화 리조트로의 예약 요청 정보
     // 리프레쉬 여부
     @SerializedName("REFRESH_YN")
     private String refreshYn;
-    // 시작 날짜
-    @SerializedName("STRT_DATE")
-    private LocalDate strtDate;
-    // 끝 날짜
-    @SerializedName("END_DATE")
-    private LocalDate endDate;
 }
