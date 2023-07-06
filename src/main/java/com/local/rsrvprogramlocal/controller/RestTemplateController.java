@@ -1,6 +1,8 @@
 package com.local.rsrvprogramlocal.controller;
 
 import com.local.rsrvprogramlocal.model.service.ConnectionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,14 +17,15 @@ public class RestTemplateController {
     final RestTemplate restTemplate;
     ConnectionService connectionService;
 
-
     public RestTemplateController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @GetMapping("/rsrvRequest")
     public String rsrvRequest(@RequestParam int select) {
-        // Header 생성
+
+        System.out.println(select);
+        /*// Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-type", "application/json");
 
@@ -45,7 +48,7 @@ public class RestTemplateController {
         HttpStatus statusCode = response.getStatusCode();
         HttpHeaders responseHeaders = response.getHeaders();
         String responseBody = response.getBody();
-        System.out.println(responseBody.toString());
-        return responseBody;
+        System.out.println(responseBody.toString());*/
+        return null;
     }
 }
