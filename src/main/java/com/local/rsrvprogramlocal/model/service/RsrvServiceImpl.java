@@ -2,6 +2,8 @@ package com.local.rsrvprogramlocal.model.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.local.rsrvprogramlocal.exception.CloseException;
+import com.local.rsrvprogramlocal.exception.FileNotReadException;
 import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
 import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
 import com.local.rsrvprogramlocal.model.service.util.LocalDateDeserializer;
@@ -22,13 +24,16 @@ public class RsrvServiceImpl implements RsrvService {
 
     @Override
     public String getRequestFile(int select) { // 예약 신청 요청 JSON 파일 읽기
-        URL resource = getClass().getClassLoader().getResource("static/file/RsrvReqRq.json");
+        String fileName = "RsrvReqRq.json";
+        URL resource = getClass().getClassLoader().getResource("static/file/" + fileName);
         String jsonFilePath = resource.getFile();
         File file = new File(jsonFilePath);
+
         FileInputStream fis = null;
         InputStreamReader isr = null;
         BufferedReader br = null;
         String jsonFileContentLine;
+
         try {
             fis = new FileInputStream(file);
             isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
@@ -39,33 +44,30 @@ public class RsrvServiceImpl implements RsrvService {
             while((jsonFileContentLine = br.readLine()) != null){ // 빈 문자열이 없도록 주의(NPE)
                 sb.append(jsonFileContentLine);
             }
-            System.out.println(sb.toString());
             return sb.toString();
-        }catch (FileNotFoundException e) {
-            return "FileNotFoundException";
-            // 파일을 읽지 못했을 경우
+            // 체크 예외
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileNotReadException(e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new CloseException("BufferedReader is not closed", e);
                 }
             }
             if (isr != null) {
                 try {
                     isr.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new CloseException("InputStreamReader is not closed", e);
                 }
             }
             if (fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new CloseException("FileInputStream is not closed", e);
                 }
             }
         }
