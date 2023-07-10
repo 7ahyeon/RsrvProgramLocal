@@ -51,9 +51,7 @@ public class RestTemplateController {
         HttpStatus statusCode = response.getStatusCode();
         HttpHeaders responseHeaders = response.getHeaders();
         String responseBody = response.getBody();
-        System.out.println(responseBody.toString());
         String responseTostring = connectionService.handleResponse(responseBody);
-        System.out.println(responseTostring);
-        return null;
+        return responseTostring;
     }
 }

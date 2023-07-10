@@ -46,6 +46,7 @@ public class RsrvServiceImpl implements RsrvService {
             return sb.toString();
             // 체크 예외
         } catch (IOException e) {
+            // 파일을 읽지 못했을 때
             throw new FileNotReadException(e);
         } finally {
             if (fr != null) {
@@ -78,7 +79,6 @@ public class RsrvServiceImpl implements RsrvService {
 
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
-
             RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
             System.out.println("call" + rsrvRequest.toString());
             return rsrvRequest;
