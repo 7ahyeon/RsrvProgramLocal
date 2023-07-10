@@ -14,14 +14,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Service
 public class RsrvServiceImpl implements RsrvService {
-
     @Override
     public String getRequestFile(int select) { // 예약 신청 요청 JSON 파일 읽기
         String fileName = "RsrvReqRq.json";

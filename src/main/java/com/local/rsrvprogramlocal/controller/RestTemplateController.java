@@ -30,7 +30,6 @@ public class RestTemplateController {
 
     @GetMapping("/rsrvRequest")
     public String rsrvRequest(@RequestParam int select) {
-        System.out.println(select);
         // Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-type", "application/json");
@@ -54,7 +53,10 @@ public class RestTemplateController {
         HttpStatus statusCode = response.getStatusCode();
         HttpHeaders responseHeaders = response.getHeaders();
         String responseBody = response.getBody();
-        String responseTostring = connectionService.handleResponse(responseBody);
+        String responseTostring = "HTTP Status : " + statusCode.toString()
+                                + "<br>Header : " + responseHeaders.toString()
+                                + "<br>응답 : " + connectionService.handleResponse(responseBody);
+
         return responseTostring;
     }
 }
