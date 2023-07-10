@@ -1,8 +1,11 @@
 package com.local.rsrvprogramlocal.config;
 
+import com.local.rsrvprogramlocal.config.exception.RestTemplateResponseErrorHandler;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.*;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -38,6 +41,8 @@ public class RestTemplateConfig {
                 // 방지 : 일정 시간 응답이 없을시 연결 강제 중단
                 .setConnectTimeout(Duration.ofSeconds(5))
                 .setReadTimeout(Duration.ofSeconds(5))
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .errorHandler(new RestTemplateResponseErrorHandler())
                 .additionalInterceptors(clientHttpRequestInterceptor())
                 .build();
     }

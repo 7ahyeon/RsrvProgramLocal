@@ -24,17 +24,13 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Override
     public String httpConnection(int select) {
         // *******예외 추가
-        // Header 생성
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
         // Body 생성
         JsonObject requestJson = createRequest(select);
 
         // HttpEntity 생성
         // HttpEntity<T> : HTTP 요청/응답에 해당하는 HttpHeader와 HttpBody를 포함하는 클래스
         // RequestEntity / ResponseEntity : HttpEntity 클래스를 상속받아 구현한 클래스
-        HttpEntity<JsonObject> request = new HttpEntity<>(requestJson, headers);
+        HttpEntity<JsonObject> request = new HttpEntity<>(requestJson);
 
         // HTTP 통신
         String url = "http://localhost:8002/rsrvResponse";
