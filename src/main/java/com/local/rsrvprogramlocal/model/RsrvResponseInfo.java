@@ -1,4 +1,4 @@
-package com.local.rsrvprogramlocal.model.dto;
+package com.local.rsrvprogramlocal.model;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;

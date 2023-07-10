@@ -1,4 +1,4 @@
-package com.local.rsrvprogramlocal.model.service.util;
+package com.local.rsrvprogramlocal.config.util;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

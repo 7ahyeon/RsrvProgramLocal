@@ -1,15 +1,17 @@
-package com.local.rsrvprogramlocal.model.service;
+package com.local.rsrvprogramlocal.service.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.local.rsrvprogramlocal.exception.CloseException;
-import com.local.rsrvprogramlocal.exception.FileNotReadException;
-import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
-import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
-import com.local.rsrvprogramlocal.model.service.util.LocalDateDeserializer;
-import com.local.rsrvprogramlocal.model.service.util.LocalDateSerializer;
-import com.local.rsrvprogramlocal.model.service.util.LocalDateTimeDeserializer;
-import com.local.rsrvprogramlocal.model.service.util.LocalDateTimeSerializer;
+import com.google.gson.JsonObject;
+import com.local.rsrvprogramlocal.config.exception.CloseException;
+import com.local.rsrvprogramlocal.config.exception.FileNotReadException;
+import com.local.rsrvprogramlocal.model.RsrvRequest;
+import com.local.rsrvprogramlocal.model.RsrvResponse;
+import com.local.rsrvprogramlocal.service.RsrvService;
+import com.local.rsrvprogramlocal.config.util.LocalDateDeserializer;
+import com.local.rsrvprogramlocal.config.util.LocalDateSerializer;
+import com.local.rsrvprogramlocal.config.util.LocalDateTimeDeserializer;
+import com.local.rsrvprogramlocal.config.util.LocalDateTimeSerializer;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -78,7 +80,6 @@ public class RsrvServiceImpl implements RsrvService {
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
             RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
-            System.out.println("call" + rsrvRequest.toString());
             return rsrvRequest;
         } else if (jsonFileContent.contains("ds_prcsResult")) {
             // 응답
@@ -91,13 +92,14 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public String parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
+    public JsonObject parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         Gson gson = gsonBuilder.serializeNulls().setPrettyPrinting().create();
 
         String jsonContent = gson.toJson(rsrvRequest);
-        return jsonContent;
+        JsonObject responseJson = gson.fromJson(jsonContent, JsonObject.class);
+        return responseJson;
     }
 }

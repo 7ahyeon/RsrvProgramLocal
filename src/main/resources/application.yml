@@ -4,6 +4,8 @@ server:
 
 spring:
   mvc:
+    converters:
+      preferred-json-mapper: gson
     view:
       prefix: /WEB-INF/view/
       suffix: .jsp

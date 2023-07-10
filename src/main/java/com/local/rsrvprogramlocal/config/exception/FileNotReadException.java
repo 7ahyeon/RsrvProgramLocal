@@ -1,4 +1,4 @@
-package com.local.rsrvprogramlocal.exception;
+package com.local.rsrvprogramlocal.config.exception;
 
 public class FileNotReadException extends RuntimeException {
     public FileNotReadException(Throwable cause) {

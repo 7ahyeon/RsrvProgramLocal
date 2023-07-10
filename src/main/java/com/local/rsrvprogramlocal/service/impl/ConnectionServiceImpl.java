@@ -1,7 +1,10 @@
-package com.local.rsrvprogramlocal.model.service;
+package com.local.rsrvprogramlocal.service.impl;
 
-import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
-import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
+import com.google.gson.JsonObject;
+import com.local.rsrvprogramlocal.model.RsrvRequest;
+import com.local.rsrvprogramlocal.model.RsrvResponse;
+import com.local.rsrvprogramlocal.service.ConnectionService;
+import com.local.rsrvprogramlocal.service.RsrvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +18,13 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
     @Override
-    public String createRequest(int select) {
+    public JsonObject createRequest(int select) {
         // 요청 파일 읽기
         String jsonFileContent = rsrvService.getRequestFile(select);
         // 요청 Json 전문 Object 바인딩
         RsrvRequest rsrvRequest = (RsrvRequest) rsrvService.bindingObject(jsonFileContent);
         // 요청 Json 전문 생성
-        String requestJson = rsrvService.parsingJson(rsrvRequest);
+        JsonObject requestJson = rsrvService.parsingJson(rsrvRequest);
 
         return requestJson;
     }

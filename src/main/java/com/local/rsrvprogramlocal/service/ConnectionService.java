@@ -1,8 +1,10 @@
-package com.local.rsrvprogramlocal.model.service;
+package com.local.rsrvprogramlocal.service;
+
+import com.google.gson.JsonObject;
 
 public interface ConnectionService {
     // 요청 JSON 생성
-    String createRequest(int select);
+    JsonObject createRequest(int select);
     // 응답 JSON 처리
     String handleResponse(String responseJsonContent);
 }
