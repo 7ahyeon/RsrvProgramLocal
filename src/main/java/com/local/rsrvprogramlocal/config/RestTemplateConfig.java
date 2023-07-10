@@ -13,7 +13,14 @@ import java.time.Duration;
 
 @Configuration
 public class RestTemplateConfig {
-
+    /* @Configuration @Bean
+      스프링 컨테이너가 @Configuration이 붙은 클래스를 자동 빈 등록 후 해당 클래스를 파싱해서 @Bean이 있는 메소드를 찾아서 빈 생성해줌
+      싱글톤 빈으로 등록(proxyBeanMethods=true)해서 1개의 객체만 생성하여 여러 클래스가 공유함으로써 메모리 상의 이점을 얻음
+   */
+    /* 싱글톤 Singleton pattern : 어떤 클래스가 최초 생성 시에만 메모리를 할당하고 그 메모리에 하나의 인스턴스를 만들어 계속 사용하는 디자인 패턴
+       최초 생성 이후에 호출된 생성자는 최초의 생성자가 생성한 객체를 리턴함
+    */
+    // Spring Bean : Spring의 DI 컨테이너에 의해 관리되는 POJO(Spring 애플리케이션을 구성하는 핵심 객체)
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder

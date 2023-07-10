@@ -35,6 +35,10 @@ dependencies {
     implementation 'javax.servlet:jstl'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
+    // Swagger : REST API 설계, 빌드, 문서화 오픈소스 프레임워크
+    // SpringFox Boot Starter : SpringFox Swagger 2 + UI
+    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
     // JDBC Type 4 driver for MySQL(8.0.33)
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
