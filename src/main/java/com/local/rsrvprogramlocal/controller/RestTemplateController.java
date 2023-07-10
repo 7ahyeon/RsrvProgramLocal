@@ -33,6 +33,7 @@ public class RestTemplateController {
 
     @PostMapping("/rsrvRequest")
     public String rsrvRequest(@RequestParam int select) {
+        // *******예외 수정
         // Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

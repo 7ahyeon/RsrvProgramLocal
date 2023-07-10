@@ -1,27 +1,28 @@
 package com.local.rsrvprogramlocal.service.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.local.rsrvprogramlocal.config.exception.CloseException;
 import com.local.rsrvprogramlocal.config.exception.FileNotReadException;
 import com.local.rsrvprogramlocal.model.RsrvRequest;
 import com.local.rsrvprogramlocal.model.RsrvResponse;
 import com.local.rsrvprogramlocal.service.RsrvService;
-import com.local.rsrvprogramlocal.config.util.LocalDateDeserializer;
-import com.local.rsrvprogramlocal.config.util.LocalDateSerializer;
-import com.local.rsrvprogramlocal.config.util.LocalDateTimeDeserializer;
-import com.local.rsrvprogramlocal.config.util.LocalDateTimeSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Service
 public class RsrvServiceImpl implements RsrvService {
+    @Autowired
+    private final Gson gson;
+
+    public RsrvServiceImpl(Gson gson) {
+        this.gson = gson;
+    }
+
     @Override
     public String getRequestFile(int select) { // 예약 신청 요청 JSON 파일 읽기
         String fileName = "RsrvReqRq.json";
@@ -68,15 +69,6 @@ public class RsrvServiceImpl implements RsrvService {
 
     @Override
     public Object bindingObject(String jsonFileContent) { // JSON 전문 Object 바인딩
-        //.serializeNulls() .setPrettyPrinting() : toJson (직렬화 시 사용)
-        // .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES) : Underscore를 CamelCase로 자동 변환 / 작동 불가 이슈
-        // Object @SerializedName 설정 부여
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        // 역직렬화시 LocalDate formatting
-        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
-
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
             RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
@@ -93,11 +85,6 @@ public class RsrvServiceImpl implements RsrvService {
 
     @Override
     public JsonObject parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
-        Gson gson = gsonBuilder.serializeNulls().setPrettyPrinting().create();
-
         String jsonContent = gson.toJson(rsrvRequest);
         JsonObject responseJson = gson.fromJson(jsonContent, JsonObject.class);
         return responseJson;

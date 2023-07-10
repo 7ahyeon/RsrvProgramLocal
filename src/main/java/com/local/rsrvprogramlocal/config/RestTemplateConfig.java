@@ -45,6 +45,7 @@ public class RestTemplateConfig {
             retryTemplate.setRetryPolicy(new SimpleRetryPolicy(3));
             try {
                 return retryTemplate.execute(context -> execution.execute(request, body));
+            // *******예외 수정
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
