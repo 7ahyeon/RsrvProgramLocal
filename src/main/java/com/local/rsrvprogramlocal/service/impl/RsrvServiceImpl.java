@@ -85,6 +85,7 @@ public class RsrvServiceImpl implements RsrvService {
 
     @Override
     public JsonObject parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
+        // *******예외 추가
         String jsonContent = gson.toJson(rsrvRequest);
         JsonObject responseJson = gson.fromJson(jsonContent, JsonObject.class);
         return responseJson;
