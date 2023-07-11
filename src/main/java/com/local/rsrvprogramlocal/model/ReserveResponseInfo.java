@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ToString
 @Getter
 @Setter
 @NoArgsConstructor
-public class RsrvResponseInfo {
+public class ReserveResponseInfo {
     // 처리 일시
     @SerializedName("PROC_DS")
     private LocalDateTime procDs;

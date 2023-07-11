@@ -20,6 +20,7 @@ public class RestTemplateController {
     @PostMapping("/rsrvRequest")
     public String rsrvRequest(@RequestParam int select) {
         String responseTostring = connectionService.httpConnection(select);
+        System.out.println(select);
         return responseTostring;
     }
 }

@@ -4,9 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.local.rsrvprogramlocal.config.exception.CloseException;
 import com.local.rsrvprogramlocal.config.exception.FileNotReadException;
-import com.local.rsrvprogramlocal.model.RsrvRequest;
-import com.local.rsrvprogramlocal.model.RsrvResponse;
-import com.local.rsrvprogramlocal.service.RsrvService;
+import com.local.rsrvprogramlocal.dao.ReserveRepository;
+import com.local.rsrvprogramlocal.model.ReserveRequest;
+import com.local.rsrvprogramlocal.model.ReserveResponse;
+import com.local.rsrvprogramlocal.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +16,20 @@ import java.net.URL;
 import java.util.Collections;
 
 @Service
-public class RsrvServiceImpl implements RsrvService {
+public class ReserveServiceImpl implements ReserveService {
     @Autowired
     private final Gson gson;
+    @Autowired
+    private final ReserveRepository reserveRepository;
 
-    public RsrvServiceImpl(Gson gson) {
+    public ReserveServiceImpl(Gson gson, ReserveRepository reserveRepository) {
         this.gson = gson;
+        this.reserveRepository = reserveRepository;
     }
 
     @Override
     public String getRequestFile(int select) { // 예약 신청 요청 JSON 파일 읽기
+        System.out.println("읽기");
         String fileName = "RsrvReqRq.json";
         URL resource = getClass().getClassLoader().getResource("static/file/" + fileName);
         String jsonFilePath = resource.getFile();
@@ -69,14 +74,15 @@ public class RsrvServiceImpl implements RsrvService {
 
     @Override
     public Object bindingObject(String jsonFileContent) { // JSON 전문 Object 바인딩
+        System.out.println("쓰기");
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
-            RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
-            return rsrvRequest;
+            ReserveRequest reserveRequest = gson.fromJson(jsonFileContent, ReserveRequest.class);
+            return reserveRequest;
         } else if (jsonFileContent.contains("ds_prcsResult")) {
             // 응답
-            RsrvResponse rsrvResponse = gson.fromJson(jsonFileContent, RsrvResponse.class);
-            return rsrvResponse;
+            ReserveResponse reserveResponse = gson.fromJson(jsonFileContent, ReserveResponse.class);
+            return reserveResponse;
         } else {
             // 예외 처리 패턴 getOrElse : 예외 대신 기본 값을 리턴함(null이 아닌 기본 값)
             return Collections.emptyList();
@@ -84,9 +90,16 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public JsonObject parsingJson(RsrvRequest rsrvRequest) { // 요청 JSON 전문 생성
+    public Long saveReserveRequest(ReserveRequest reserveRequest) {
+        Long roomReserveId = reserveRepository.reserveRequest(reserveRequest);
+        return roomReserveId;
+    }
+
+    @Override
+    public JsonObject parsingJson(ReserveRequest reserveRequest) { // 요청 JSON 전문 생성
         // *******예외 추가
-        String jsonContent = gson.toJson(rsrvRequest);
+        System.out.println("말하기");
+        String jsonContent = gson.toJson(reserveRequest);
         JsonObject responseJson = gson.fromJson(jsonContent, JsonObject.class);
         return responseJson;
     }

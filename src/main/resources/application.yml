@@ -16,10 +16,10 @@ spring:
     view:
       prefix: /WEB-INF/view/
       suffix: .jsp
-    #Swagger 사용 설정(Spring boot 2.6 이후 matching-strategy가 path_pattern_parser 변경됨)
     pathmatch:
       matching-strategy: ant_path_matcher
-#  datasource:
-# MySQL connector 8.x : 패키지 경로 변경(com.mysql>cj>Driver.class) : com.mysql.cj.jdbc.Driver 사용
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8
+    username: thekmanager
+    password: thek1234

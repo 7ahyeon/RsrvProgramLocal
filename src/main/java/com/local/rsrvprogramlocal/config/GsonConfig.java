@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 @Configuration
 public class GsonConfig {
-
     @Bean
     public Gson gson(GsonBuilder gsonBuilder) {
         gsonBuilder = new GsonBuilder();

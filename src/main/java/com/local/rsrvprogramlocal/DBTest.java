@@ -8,7 +8,7 @@ public class DBTest {
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306",
                     "root",
-                    "230418"
+                    "kw230418"
             );
 
             Statement stmt = conn.createStatement();

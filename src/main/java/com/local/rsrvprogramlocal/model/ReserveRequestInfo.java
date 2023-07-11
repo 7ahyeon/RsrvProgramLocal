@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @NoArgsConstructor
-public class RsrvRequestInfo { // 한화 리조트로의 예약 요청 정보
+public class ReserveRequestInfo { // 한화 리조트로의 예약 요청 정보
     // 고객 번호(교직원공제회 0000000002 고정)
     @SerializedName("CUST_NO")
     private String custNo;

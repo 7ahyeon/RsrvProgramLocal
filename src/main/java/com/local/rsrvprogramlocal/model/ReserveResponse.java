@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RsrvResponse { // 한화 리조트에서의 예약 응답
+public class ReserveResponse { // 한화 리조트에서의 예약 응답
     @SerializedName("ds_prcsResult") // 예약 신청 JSON Key
-    private ArrayList<RsrvResponseInfo> rsrvResponseInfoList;
+    private ArrayList<ReserveResponseInfo> reserveResponseInfoList;
 }
