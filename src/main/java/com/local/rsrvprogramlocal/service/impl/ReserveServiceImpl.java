@@ -76,7 +76,6 @@ public class ReserveServiceImpl implements ReserveService {
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
             ReserveRequest reserveRequest = gson.fromJson(jsonFileContent, ReserveRequest.class);
-            System.out.println(reserveRequest.toString());
             return reserveRequest;
         } else if (jsonFileContent.contains("ds_prcsResult")) {
             // 응답
@@ -90,7 +89,7 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public Long saveReserveRequest(ReserveRequest reserveRequest) {
-        Long roomReserveId = reserveRepository.reserveRequest(reserveRequest);
+        Long roomReserveId = reserveRepository.insertReserve(reserveRequest);
         return roomReserveId;
     }
 
@@ -100,5 +99,11 @@ public class ReserveServiceImpl implements ReserveService {
         String jsonContent = gson.toJson(reserveRequest);
         JsonObject responseJson = gson.fromJson(jsonContent, JsonObject.class);
         return responseJson;
+    }
+
+    @Override
+    public int completeReserve(ReserveResponse reserveResponse, Long roomReserveId) {
+        int result = reserveRepository.updateReserve(reserveResponse, roomReserveId);
+        return result;
     }
 }

@@ -3,6 +3,7 @@ package com.local.rsrvprogramlocal.dao;
 import com.local.rsrvprogramlocal.model.ReserveRequest;
 
 import com.local.rsrvprogramlocal.model.ReserveRequestInfo;
+import com.local.rsrvprogramlocal.model.ReserveResponse;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -19,6 +20,8 @@ public class ReserveRepository {
     // JdbcTemplate : DAO객체에서 DB와 연동하기 위해 SQL연산들을 수행할 수 있도록 도와줌
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final SimpleJdbcInsert simpleJdbcInsert;
+
+    private final String updateQuery = "UPDATE room_reserve SET rsrv_no = :rsrvNo, rsrv_cmpl_date = :rsrvCmplDate, rsrv_cmpl_st = :rsrvCmplSt WHERE room_reserve_id = :roomReserveId";
 
 
     public ReserveRepository(DataSource dataSource) {
@@ -37,14 +40,22 @@ public class ReserveRepository {
                 .usingGeneratedKeyColumns("rsrv_cmpl_st");
     }
 
-    public Long reserveRequest(ReserveRequest reserveRequest) {
+    public Long insertReserve(ReserveRequest reserveRequest) {
         reserveRequest.getReserveRequestInfoList().get(0).setRsrvReqDate(LocalDate.now());
         // SqlParameterSource : SQL에 들어갈 parameter(Map객체)를 처리하는 인터페이스
         // BeanPropertySqlParameterSource : Bean객체를 Map객체로 변환
-        System.out.println("insert" + reserveRequest.getReserveRequestInfoList().get(0));
         SqlParameterSource params = new BeanPropertySqlParameterSource(reserveRequest.getReserveRequestInfoList().get(0));
 
         return simpleJdbcInsert.executeAndReturnKey(params).longValue();
+    }
+
+    public int updateReserve(ReserveResponse reserveResponse, Long roomReserveId) {
+        reserveResponse.getReserveResponseInfoList().get(0).setRsrvCmplDate(LocalDate.now());
+        reserveResponse.getReserveResponseInfoList().get(0).setRsrvCmplSt("Y");
+        reserveResponse.getReserveResponseInfoList().get(0).setRoomReserveId(roomReserveId);
+        System.out.println(reserveResponse.getReserveResponseInfoList().get(0).toString());
+        SqlParameterSource params = new BeanPropertySqlParameterSource(reserveResponse.getReserveResponseInfoList().get(0));
+        return namedParameterJdbcTemplate.update(updateQuery, params);
     }
 
 }
