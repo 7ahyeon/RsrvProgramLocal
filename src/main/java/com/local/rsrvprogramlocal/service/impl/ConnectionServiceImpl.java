@@ -44,7 +44,6 @@ public class ConnectionServiceImpl implements ConnectionService {
         // exchange() : 지정된 HTTP 메서드를 URL에 대해 실행하며, Response body와 연결되는 객체를 포함하는 responseEntity를 반환함
         // 요청할 서버 주소, 요청 방식, 요청 데이터, 응답 데이터 타입
         ResponseEntity<JsonObject> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonObject.class);
-        System.out.println("응답");
         HttpStatus statusCode = response.getStatusCode();
         HttpHeaders responseHeaders = response.getHeaders();
         JsonObject responseBody = response.getBody();
@@ -65,11 +64,10 @@ public class ConnectionServiceImpl implements ConnectionService {
         // 요청 Json 전문 Object 바인딩
         ReserveRequest reserveRequest = (ReserveRequest) reserveService.bindingObject(jsonFileContent);
         // 예약 요청 저장
-        Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
-        System.out.println("저장완 " + roomReserveId);
+        //Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
         // 요청 Json 전문 생성
         JsonObject requestJson = reserveService.parsingJson(reserveRequest);
-        request.put("roomReserveId", roomReserveId);
+        //request.put("roomReserveId", roomReserveId);
         request.put("request", requestJson);
 
         return request;

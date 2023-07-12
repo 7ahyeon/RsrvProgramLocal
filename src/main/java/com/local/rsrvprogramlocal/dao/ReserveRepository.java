@@ -4,6 +4,7 @@ import com.local.rsrvprogramlocal.model.ReserveRequest;
 
 import com.local.rsrvprogramlocal.model.ReserveRequestInfo;
 import com.local.rsrvprogramlocal.model.ReserveResponse;
+import com.local.rsrvprogramlocal.model.ReserveResponseInfo;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -11,9 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.List;
 
 @Repository
 public class ReserveRepository {
@@ -50,11 +49,12 @@ public class ReserveRepository {
     }
 
     public int updateReserve(ReserveResponse reserveResponse, Long roomReserveId) {
-        reserveResponse.getReserveResponseInfoList().get(0).setRsrvCmplDate(LocalDate.now());
-        reserveResponse.getReserveResponseInfoList().get(0).setRsrvCmplSt("Y");
-        reserveResponse.getReserveResponseInfoList().get(0).setRoomReserveId(roomReserveId);
-        System.out.println(reserveResponse.getReserveResponseInfoList().get(0).toString());
-        SqlParameterSource params = new BeanPropertySqlParameterSource(reserveResponse.getReserveResponseInfoList().get(0));
+        ReserveResponseInfo reserveResponseInfo = reserveResponse.getReserveResponseInfoList().get(0);
+        reserveResponseInfo.setRsrvCmplDate(LocalDate.now());
+        reserveResponseInfo.setRsrvCmplSt("Y");
+        reserveResponseInfo.setRoomReserveId(roomReserveId);
+        System.out.println(reserveResponseInfo.toString());
+        SqlParameterSource params = new BeanPropertySqlParameterSource(reserveResponseInfo);
         return namedParameterJdbcTemplate.update(updateQuery, params);
     }
 
