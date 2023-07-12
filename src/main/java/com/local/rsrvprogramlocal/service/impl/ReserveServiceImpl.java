@@ -29,7 +29,6 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public String getRequestFile(int select) { // 예약 신청 요청 JSON 파일 읽기
-        System.out.println("읽기");
         String fileName = "RsrvReqRq.json";
         URL resource = getClass().getClassLoader().getResource("static/file/" + fileName);
         String jsonFilePath = resource.getFile();
@@ -74,10 +73,10 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public Object bindingObject(String jsonFileContent) { // JSON 전문 Object 바인딩
-        System.out.println("쓰기");
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
             ReserveRequest reserveRequest = gson.fromJson(jsonFileContent, ReserveRequest.class);
+            System.out.println(reserveRequest.toString());
             return reserveRequest;
         } else if (jsonFileContent.contains("ds_prcsResult")) {
             // 응답
@@ -98,7 +97,6 @@ public class ReserveServiceImpl implements ReserveService {
     @Override
     public JsonObject parsingJson(ReserveRequest reserveRequest) { // 요청 JSON 전문 생성
         // *******예외 추가
-        System.out.println("말하기");
         String jsonContent = gson.toJson(reserveRequest);
         JsonObject responseJson = gson.fromJson(jsonContent, JsonObject.class);
         return responseJson;

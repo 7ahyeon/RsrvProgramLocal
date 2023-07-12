@@ -26,7 +26,6 @@ public class ConnectionServiceImpl implements ConnectionService {
         // *******예외 추가
         // Body 생성
         JsonObject requestJson = createRequest(select);
-        System.out.println("요청");
         // HttpEntity 생성
         // HttpEntity<T> : HTTP 요청/응답에 해당하는 HttpHeader와 HttpBody를 포함하는 클래스
         // RequestEntity / ResponseEntity : HttpEntity 클래스를 상속받아 구현한 클래스
@@ -56,8 +55,8 @@ public class ConnectionServiceImpl implements ConnectionService {
         // 요청 Json 전문 Object 바인딩
         ReserveRequest reserveRequest = (ReserveRequest) reserveService.bindingObject(jsonFileContent);
         // 예약 요청 저장
-        //Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
-        //System.out.println("예약 요청 저장 : " + roomReserveId);
+        Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
+        System.out.println("예약 요청 저장 : " + roomReserveId);
         // 요청 Json 전문 생성
         JsonObject requestJson = reserveService.parsingJson(reserveRequest);
 

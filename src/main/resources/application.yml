@@ -10,6 +10,11 @@ server:
       enabled: false
 
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8
+    username: thekmanager
+    password: thek1234
   mvc:
     converters:
       preferred-json-mapper: gson
@@ -18,8 +23,3 @@ spring:
       suffix: .jsp
     pathmatch:
       matching-strategy: ant_path_matcher
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8
-    username: thekmanager
-    password: thek1234

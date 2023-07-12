@@ -41,8 +41,8 @@ dependencies {
     // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
     // JDBC Type 4 driver for MySQL(8.0.33)
-    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation 'mysql:mysql-connector-java:8.0.33'
     // GSON : Benchmark 2021 181MB/86kb Test 속도 1위 (Jackson, JSON.simple, JSONP)
     // 버전 선택 사유 : 취약점이 존재하지 않고 가장 많은 다운로드를 기록함
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
