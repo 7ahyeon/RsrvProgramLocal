@@ -1,6 +1,5 @@
 package com.local.rsrvprogramlocal.config;
 
-import com.local.rsrvprogramlocal.config.exception.RestTemplateResponseErrorHandler;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +41,7 @@ public class RestTemplateConfig {
                 .setConnectTimeout(Duration.ofSeconds(5))
                 .setReadTimeout(Duration.ofSeconds(5))
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .errorHandler(new RestTemplateResponseErrorHandler())
+//                .errorHandler(new RestTemplateResponseErrorHandler())
                 .additionalInterceptors(clientHttpRequestInterceptor())
                 .build();
     }

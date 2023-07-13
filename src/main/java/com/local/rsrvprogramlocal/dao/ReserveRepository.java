@@ -34,7 +34,6 @@ public class ReserveRepository {
                 // withTableName : Insert할 테이블 이름 설정
                 .withTableName("room_reserve")
                 // usingGeneratedKeyColumns : Auto_increment를 통해 생성된 값 컬럼 자동 입력
-                .usingColumns()
                 .usingGeneratedKeyColumns("room_reserve_id")
                 .usingGeneratedKeyColumns("rsrv_cmpl_st");
     }

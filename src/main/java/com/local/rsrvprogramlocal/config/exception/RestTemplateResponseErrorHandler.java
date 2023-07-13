@@ -1,3 +1,4 @@
+/*
 package com.local.rsrvprogramlocal.config.exception;
 
 import org.springframework.http.HttpStatus;
@@ -24,3 +25,4 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
         }
     }
 }
+*/

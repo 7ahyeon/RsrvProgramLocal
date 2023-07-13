@@ -12,9 +12,11 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
     username: thekmanager
     password: thek1234
+  hikari:
+    connection-timeout: -1
   mvc:
     converters:
       preferred-json-mapper: gson
