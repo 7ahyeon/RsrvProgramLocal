@@ -12,9 +12,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # useSSL: DB에 SSL로 연결
-    # allowPublicKeyRetrieval: 서버에서 RSA공개키를 검색하거나 가져와야하는지
-    url: jdbc:mysql://127.0.0.1:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/thekhanhwa?serverTimezone=UTC&characterEncoding=UTF-8
     username: thekmanager
     password: thek1234
   hikari:
