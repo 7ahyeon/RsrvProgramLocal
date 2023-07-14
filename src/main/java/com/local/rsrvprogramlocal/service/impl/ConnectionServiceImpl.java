@@ -64,7 +64,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         // 요청 Json 전문 Object 바인딩
         ReserveRequest reserveRequest = (ReserveRequest) reserveService.bindingObject(jsonFileContent);
         // 예약 요청 저장
-        //Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
+        Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
         // 요청 Json 전문 생성
         JsonObject requestJson = reserveService.parsingJson(reserveRequest);
         //request.put("roomReserveId", roomReserveId);
