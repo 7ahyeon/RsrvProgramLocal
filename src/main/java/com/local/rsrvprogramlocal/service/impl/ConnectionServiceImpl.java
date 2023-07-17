@@ -49,7 +49,6 @@ public class ConnectionServiceImpl implements ConnectionService {
         JsonObject responseBody = response.getBody();
 
         int result = handleResponse(responseBody,roomReserveId);
-        System.out.println(responseBody.toString());
         String responseTostring = "HTTP Status : " + statusCode.toString()
                 + "<br>Header : " + responseHeaders.toString()
                 + "<br>응답 : " + responseBody.toString();
@@ -65,9 +64,13 @@ public class ConnectionServiceImpl implements ConnectionService {
         ReserveRequest reserveRequest = (ReserveRequest) reserveService.bindingObject(jsonFileContent);
         // 예약 요청 저장
         Long roomReserveId = reserveService.saveReserveRequest(reserveRequest);
+        // 예약 요청 저장 확인
+        ReserveRequest showRequest = reserveService.showRequest(roomReserveId);
+        System.out.println("예약 요청 정보 DB 저장 확인");
+        System.out.println(showRequest.toString());
         // 요청 Json 전문 생성
         JsonObject requestJson = reserveService.parsingJson(reserveRequest);
-        //request.put("roomReserveId", roomReserveId);
+        request.put("roomReserveId", roomReserveId);
         request.put("request", requestJson);
 
         return request;
@@ -77,7 +80,12 @@ public class ConnectionServiceImpl implements ConnectionService {
     public int handleResponse(JsonObject responseJson, Long roomReserveId) {
         // 응답 Json 전문 Object 바인딩
         ReserveResponse reserveResponse = (ReserveResponse) reserveService.bindingObject(responseJson.toString());
+        // 예약 완료 처리
         int result = reserveService.completeReserve(reserveResponse, roomReserveId);
+        // 예약 완료 갱신 확인
+        ReserveRequest showResquestComplete = reserveService.showRequest(roomReserveId);
+        System.out.println("예약 완료 정보 DB 갱신 확인");
+        System.out.println(showResquestComplete.toString());
         return result;
     }
 }

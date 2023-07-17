@@ -15,4 +15,8 @@ public interface ReserveService {
     JsonObject parsingJson(ReserveRequest reserveRequest);
     // 예약 완료 처리
     int completeReserve(ReserveResponse reserveResponse, Long roomReserveId);
+    // 예약 조회
+    ReserveRequest showRequest(Long roomReserveId);
+    // 예약 완료 조회
+    ReserveRequest showRequestCompete(Long rsrvNo);
 }

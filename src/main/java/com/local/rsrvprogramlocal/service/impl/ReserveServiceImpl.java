@@ -87,6 +87,7 @@ public class ReserveServiceImpl implements ReserveService {
         }
     }
 
+    // 예약 신청 정보 저장
     @Override
     public Long saveReserveRequest(ReserveRequest reserveRequest) {
         Long roomReserveId = reserveRepository.insertReserve(reserveRequest);
@@ -101,9 +102,22 @@ public class ReserveServiceImpl implements ReserveService {
         return responseJson;
     }
 
+    // 예약 완료 처리
     @Override
     public int completeReserve(ReserveResponse reserveResponse, Long roomReserveId) {
         int result = reserveRepository.updateReserve(reserveResponse, roomReserveId);
         return result;
+    }
+
+    @Override
+    public ReserveRequest showRequest(Long roomReserveId) {
+        ReserveRequest request = reserveRepository.selectRequest(roomReserveId);
+        return request;
+    }
+
+    @Override
+    public ReserveRequest showRequestCompete(Long rsrvNo) {
+        ReserveRequest request = reserveRepository.selectRequestComplete(rsrvNo);
+        return request;
     }
 }

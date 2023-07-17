@@ -1,18 +1,22 @@
 package com.local.rsrvprogramlocal.dao;
 
 import com.local.rsrvprogramlocal.model.ReserveRequest;
-
 import com.local.rsrvprogramlocal.model.ReserveRequestInfo;
 import com.local.rsrvprogramlocal.model.ReserveResponse;
 import com.local.rsrvprogramlocal.model.ReserveResponseInfo;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Repository
 public class ReserveRepository {
@@ -21,7 +25,8 @@ public class ReserveRepository {
     private final SimpleJdbcInsert simpleJdbcInsert;
 
     private final String updateQuery = "UPDATE room_reserve SET rsrv_no = :rsrvNo, rsrv_cmpl_date = :rsrvCmplDate, rsrv_cmpl_st = :rsrvCmplSt WHERE room_reserve_id = :roomReserveId";
-
+    private final String selectQuery = "SELECT * FROM room_reserve WHERE room_reserve_id = :roomReserveId";
+    private final String selectQueryByrsrvNo = "SELECT * FROM room_reserve WHERE rsrv_no = :rsrvNo";
 
     public ReserveRepository(DataSource dataSource) {
         // NamedParameterJdbcTemplate : 기존의 JdbcTemplate과 달리 ?대신 :파라미터명을 이용하여 파라미터를 바인딩함(식별성 보완)
@@ -55,6 +60,68 @@ public class ReserveRepository {
         System.out.println(reserveResponseInfo.toString());
         SqlParameterSource params = new BeanPropertySqlParameterSource(reserveResponseInfo);
         return namedParameterJdbcTemplate.update(updateQuery, params);
+    }
+
+    public ReserveRequest selectRequest(Long roomReserveId) {
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("roomReserveId", roomReserveId);
+
+        //namedParameterJdbcTemplate.query(selectQuery, params)
+        ReserveRequestInfo requestInfo = namedParameterJdbcTemplate.queryForObject(selectQuery, params, new RequestMapper());
+        ReserveRequest request = new ReserveRequest();
+        request.setReserveRequestInfoList(new ArrayList<>());
+        request.getReserveRequestInfoList().add(requestInfo);
+
+        return request;
+    }
+    public ReserveRequest selectRequestComplete(Long rsrvNo) {
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("rsrvNo", rsrvNo);
+
+        //namedParameterJdbcTemplate.query(selectQuery, params)
+        ReserveRequestInfo requestInfo = namedParameterJdbcTemplate.queryForObject(selectQueryByrsrvNo, params, new RequestMapper());
+        ReserveRequest request = new ReserveRequest();
+        request.setReserveRequestInfoList(new ArrayList<>());
+        request.getReserveRequestInfoList().add(requestInfo);
+
+        return request;
+    }
+
+    // RowMapper : JDBC의 인터페이스인 ResultSet에서 원하는 객체로 가상화를 변환하는 역할
+    private static final class RequestMapper implements RowMapper<ReserveRequestInfo> {
+        @Override
+        public ReserveRequestInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            ReserveRequestInfo requestInfo = new ReserveRequestInfo();
+            requestInfo.setMembNo(rs.getString("memb_no"));
+            requestInfo.setCustIdntNo(rs.getString("cust_Idnt_No"));
+            requestInfo.setLocCd(rs.getString("loc_cd"));
+            requestInfo.setRoomTypeCd(rs.getString("room_type_cd"));
+            requestInfo.setRsrvLocDivCd(rs.getString("rsrv_loc_div_cd"));
+            requestInfo.setCustNo(rs.getString("cust_no"));
+            requestInfo.setRsrvNo(rs.getString("rsrv_no"));
+            requestInfo.setArrvDate(LocalDate.parse(rs.getString("arrv_date")));
+            requestInfo.setRsrvRoomCnt(rs.getString("rsrv_room_cnt"));
+            requestInfo.setOvntCnt(rs.getString("ovnt_cnt"));
+            requestInfo.setContNo(rs.getString("cont_no"));
+            requestInfo.setPakgNo(rs.getString("pakg_no"));
+            requestInfo.setCponNo(rs.getString("cpon_no"));
+            requestInfo.setInhsNm(rs.getString("inhs_nm"));
+            requestInfo.setInhsPhoneNo2(rs.getString("inhs_phone_no2"));
+            requestInfo.setInhsPhoneNo3(rs.getString("inhs_phone_no3"));
+            requestInfo.setInhsPhoneNo4(rs.getString("inhs_phone_no4"));
+            requestInfo.setCustNm(rs.getString("cust_nm"));
+            requestInfo.setCustPhoneNo2(rs.getString("cust_phone_no2"));
+            requestInfo.setCustPhoneNo3(rs.getString("cust_phone_no3"));
+            requestInfo.setCustPhoneNo4(rs.getString("cust_phone_no4"));
+            requestInfo.setRsrvReqDate(LocalDate.parse(rs.getString("rsrv_req_date")));
+            if (rs.getString("rsrv_cmpl_date") != null) {
+                requestInfo.setRsrvCmplDate(LocalDate.parse(rs.getString("rsrv_cmpl_date")));
+            }
+            requestInfo.setRsrvCmplSt(rs.getString("rsrv_cmpl_st"));
+
+            return requestInfo;
+        }
     }
 
 }

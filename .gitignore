@@ -37,3 +37,4 @@ out/
 .vscode/
 !/docker/db/mysql/data/
 !/docker/db/mysql/data/
+!/docker/db/mysql/data/

@@ -81,4 +81,6 @@ public class ReserveRequestInfo { // 한화 리조트로의 예약 요청 정보
     @SerializedName("REFRESH_YN")
     private String refreshYn;
     private transient LocalDate rsrvReqDate;
+    private transient LocalDate rsrvCmplDate;
+    private transient String rsrvCmplSt;
 }

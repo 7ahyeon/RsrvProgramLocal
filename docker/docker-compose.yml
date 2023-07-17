@@ -1,6 +1,6 @@
 version: "4.19"
 services:
-  db:
+  mysql:
     image: mysql:8.0.33
     restart: always
     ports:
