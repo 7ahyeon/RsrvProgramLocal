@@ -57,7 +57,6 @@ public class ReserveRepository {
         reserveResponseInfo.setRsrvCmplDate(LocalDate.now());
         reserveResponseInfo.setRsrvCmplSt("Y");
         reserveResponseInfo.setRoomReserveId(roomReserveId);
-        System.out.println(reserveResponseInfo.toString());
         SqlParameterSource params = new BeanPropertySqlParameterSource(reserveResponseInfo);
         return namedParameterJdbcTemplate.update(updateQuery, params);
     }
@@ -87,7 +86,7 @@ public class ReserveRepository {
         return request;
     }
 
-    // RowMapper : JDBC의 인터페이스인 ResultSet에서 원하는 객체로 가상화를 변환하는 역할
+    // RowMapper : JDBC의 인터페이스인 ResultSet에서 원하는 객체로 변환하는 역할
     private static final class RequestMapper implements RowMapper<ReserveRequestInfo> {
         @Override
         public ReserveRequestInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
